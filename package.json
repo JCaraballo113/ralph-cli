@@ -1,0 +1,20 @@
+{
+  "name": "@jcaraballo/ralph",
+  "version": "0.1.0",
+  "description": "Minimal, file-based agent loop for autonomous coding.",
+  "bin": {
+    "ralph": "bin/ralph"
+  },
+  "scripts": {
+    "test": "node tests/cli-smoke.mjs && node tests/agent-loops.mjs",
+    "test:real": "node tests/real-agents.mjs",
+    "test:ping": "node tests/agent-ping.mjs"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.7.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,43 @@
+name: release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare dist
+        run: |
+          set -euo pipefail
+          rm -rf dist
+          mkdir -p dist/ralph
+          rsync -a \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude 'dist' \
+            --exclude 'node_modules' \
+            --exclude 'tests' \
+            bin \
+            .agents \
+            skills \
+            README.md \
+            dist/ralph/
+
+      - name: Create archives
+        run: |
+          tar -czf ralph.tar.gz -C dist ralph
+          (cd dist && zip -r ../ralph.zip ralph)
+
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ralph.tar.gz
+            ralph.zip
