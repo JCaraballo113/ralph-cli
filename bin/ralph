@@ -312,6 +312,7 @@ async function main() {
   };
   const agentDefs = loadAgentMap();
   const agentMap = agentDefs.headless;
+  const agentInteractiveMap = agentDefs.interactive;
   const defaultAgent = agentDefs.defaultAgent || "codex";
   if (agentOverride) {
     const mapped = agentMap[agentOverride];
@@ -404,9 +405,9 @@ async function main() {
     const requestFile = path.join(os.tmpdir(), `ralph-prd-${Date.now()}.md`);
     fs.writeFileSync(requestFile, `${request}\n`);
     const agentName = agentOverride || defaultAgent;
-    const prdAgent = agentMap[agentName];
-    if (prdAgent && !env.AGENT_CMD) {
-      env.AGENT_CMD = prdAgent;
+    const prdAgent = agentInteractiveMap[agentName] || agentMap[agentName];
+    if (prdAgent) {
+      env.PRD_AGENT_CMD = prdAgent;
     }
     const prdArgs = ["prd", "--prompt", requestFile];
     const result = spawnSync(loopPath, prdArgs, {

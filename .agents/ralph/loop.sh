@@ -136,12 +136,12 @@ run_agent_inline() {
   local prompt_content
   prompt_content="$(cat "$prompt_file")"
   local escaped
-  escaped=$(printf "%s" "$prompt_content" | sed "s/'/'\\\\''/g")
+  escaped=$(printf "%q" "$prompt_content")
   if [[ "$PRD_AGENT_CMD" == *"{prompt}"* ]]; then
-    local cmd="${PRD_AGENT_CMD//\{prompt\}/'$escaped'}"
+    local cmd="${PRD_AGENT_CMD//\{prompt\}/$escaped}"
     eval "$cmd"
   else
-    eval "$PRD_AGENT_CMD '$escaped'"
+    eval "$PRD_AGENT_CMD $escaped"
   fi
 }
 
