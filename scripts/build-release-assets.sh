@@ -15,10 +15,10 @@ npm ci --omit=dev
 
 mkdir -p dist/ralph
 rsync -a \
-  --exclude '.git' \
-  --exclude '.github' \
-  --exclude 'dist' \
-  --exclude 'tests' \
+  --exclude '/.git' \
+  --exclude '/.github' \
+  --exclude '/dist' \
+  --exclude '/tests' \
   bin \
   .agents \
   skills \
