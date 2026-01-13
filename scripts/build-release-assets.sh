@@ -4,18 +4,27 @@ set -euo pipefail
 root_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$root_dir"
 
-rm -rf dist ralph.tar.gz ralph.zip
-mkdir -p dist/ralph
+if ! command -v npm >/dev/null 2>&1; then
+  echo "npm is required to build release assets." >&2
+  exit 1
+fi
 
+rm -rf dist ralph.tar.gz ralph.zip
+
+npm ci --omit=dev
+
+mkdir -p dist/ralph
 rsync -a \
   --exclude '.git' \
   --exclude '.github' \
   --exclude 'dist' \
-  --exclude 'node_modules' \
   --exclude 'tests' \
   bin \
   .agents \
   skills \
+  node_modules \
+  package.json \
+  package-lock.json \
   README.md \
   dist/ralph/
 

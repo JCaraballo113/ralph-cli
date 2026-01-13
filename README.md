@@ -33,7 +33,7 @@ Windows (PowerShell):
 irm https://raw.githubusercontent.com/JCaraballo113/ralph-cli/main/install.ps1 | iex
 ```
 
-Requires Node.js. Optional environment overrides: `RALPH_REPO`, `RALPH_VERSION`, `RALPH_PREFIX`, `RALPH_INSTALL_DIR`, `RALPH_BIN_DIR`, `RALPH_NO_MODIFY_PATH`.
+Requires Node.js. Release assets include dependencies; no npm install needed. Optional environment overrides: `RALPH_REPO`, `RALPH_VERSION`, `RALPH_PREFIX`, `RALPH_INSTALL_DIR`, `RALPH_BIN_DIR`, `RALPH_NO_MODIFY_PATH`.
 
 Pinned version (macOS/Linux):
 

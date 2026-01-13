@@ -13,6 +13,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci --omit=dev
+
       - name: Prepare dist
         run: |
           set -euo pipefail
@@ -22,11 +29,13 @@ jobs:
             --exclude '.git' \
             --exclude '.github' \
             --exclude 'dist' \
-            --exclude 'node_modules' \
             --exclude 'tests' \
             bin \
             .agents \
             skills \
+            node_modules \
+            package.json \
+            package-lock.json \
             README.md \
             dist/ralph/
 
