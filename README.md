@@ -1,5 +1,7 @@
 # Ralph
 
+![Release](https://img.shields.io/github/v/release/JCaraballo113/ralph-cli?display_name=tag)
+
 ![Ralph](ralph.webp)
 
 Ralph is a minimal, file‑based agent loop for autonomous coding. Each iteration starts fresh, reads the same on‑disk state, and commits work for one story at a time.
@@ -22,16 +24,30 @@ Install and run Ralph from anywhere:
 macOS/Linux:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/jcaraballo/ralph-cli/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/JCaraballo113/ralph-cli/main/install.sh | bash
 ```
 
 Windows (PowerShell):
 
 ```powershell
-irm https://raw.githubusercontent.com/jcaraballo/ralph-cli/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/JCaraballo113/ralph-cli/main/install.ps1 | iex
 ```
 
-Requires Node.js. Optional environment overrides: `RALPH_REPO`, `RALPH_PREFIX`, `RALPH_NO_MODIFY_PATH`.
+Requires Node.js. Optional environment overrides: `RALPH_REPO`, `RALPH_VERSION`, `RALPH_PREFIX`, `RALPH_INSTALL_DIR`, `RALPH_BIN_DIR`, `RALPH_NO_MODIFY_PATH`.
+
+Pinned version (macOS/Linux):
+
+```bash
+RALPH_VERSION=v0.1.0 curl -fsSL https://raw.githubusercontent.com/JCaraballo113/ralph-cli/main/install.sh | bash
+```
+
+Pinned version (Windows PowerShell):
+
+```powershell
+$env:RALPH_VERSION="v0.1.0"; irm https://raw.githubusercontent.com/JCaraballo113/ralph-cli/main/install.ps1 | iex
+```
+
+Upgrade by re-running the installer.
 
 Run Ralph from anywhere:
 

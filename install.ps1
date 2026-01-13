@@ -1,10 +1,20 @@
 $ErrorActionPreference = "Stop"
 
-$Repo = if ($env:RALPH_REPO) { $env:RALPH_REPO } else { "jcaraballo/ralph-cli" }
+$Repo = if ($env:RALPH_REPO) { $env:RALPH_REPO } else { "JCaraballo113/ralph-cli" }
+$Version = if ($env:RALPH_VERSION) { $env:RALPH_VERSION } else { "latest" }
 $Prefix = if ($env:RALPH_PREFIX) { $env:RALPH_PREFIX } else { Join-Path $env:LOCALAPPDATA "ralph" }
 $InstallDir = if ($env:RALPH_INSTALL_DIR) { $env:RALPH_INSTALL_DIR } else { Join-Path $Prefix "share\ralph" }
 $BinDir = if ($env:RALPH_BIN_DIR) { $env:RALPH_BIN_DIR } else { Join-Path $Prefix "bin" }
-$ZipUrl = "https://github.com/$Repo/releases/latest/download/ralph.zip"
+
+if ($Version -ne "latest" -and -not $Version.StartsWith("v")) {
+  $Version = "v$Version"
+}
+
+$ZipUrl = if ($Version -eq "latest") {
+  "https://github.com/$Repo/releases/latest/download/ralph.zip"
+} else {
+  "https://github.com/$Repo/releases/download/$Version/ralph.zip"
+}
 
 if (-not (Get-Command node -ErrorAction SilentlyContinue)) {
   Write-Error "Node.js is required. Install Node.js and re-run."
@@ -15,6 +25,7 @@ $tmpDir = Join-Path ([System.IO.Path]::GetTempPath()) ("ralph-" + [System.Guid]:
 New-Item -ItemType Directory -Path $tmpDir | Out-Null
 $zipPath = Join-Path $tmpDir "ralph.zip"
 
+Write-Host "Downloading $ZipUrl"
 Invoke-WebRequest -Uri $ZipUrl -OutFile $zipPath
 Expand-Archive -Path $zipPath -DestinationPath $tmpDir -Force
 

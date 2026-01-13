@@ -1,11 +1,21 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO="${RALPH_REPO:-jcaraballo/ralph-cli}"
+REPO="${RALPH_REPO:-JCaraballo113/ralph-cli}"
+VERSION="${RALPH_VERSION:-latest}"
 PREFIX="${RALPH_PREFIX:-$HOME/.local}"
 INSTALL_DIR="${RALPH_INSTALL_DIR:-$PREFIX/share/ralph}"
 BIN_DIR="${RALPH_BIN_DIR:-$PREFIX/bin}"
-TARBALL_URL="https://github.com/$REPO/releases/latest/download/ralph.tar.gz"
+
+if [ "$VERSION" != "latest" ]; then
+  case "$VERSION" in
+    v*) ;;
+    *) VERSION="v$VERSION" ;;
+  esac
+  TARBALL_URL="https://github.com/$REPO/releases/download/$VERSION/ralph.tar.gz"
+else
+  TARBALL_URL="https://github.com/$REPO/releases/latest/download/ralph.tar.gz"
+fi
 
 if ! command -v node >/dev/null 2>&1; then
   echo "Node.js is required. Install Node.js and re-run."
@@ -28,6 +38,7 @@ cleanup() {
 }
 trap cleanup EXIT
 
+echo "Downloading $TARBALL_URL"
 curl -fsSL "$TARBALL_URL" -o "$tmp_dir/ralph.tar.gz"
 tar -xzf "$tmp_dir/ralph.tar.gz" -C "$tmp_dir"
 
